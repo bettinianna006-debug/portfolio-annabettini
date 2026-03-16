@@ -1199,20 +1199,30 @@
 
 <script>
     /* ============================================================
-       TAB SWITCHING
+       TAB SWITCHING (AGGIORNATO CON SCROLL AUTOMATICO)
     ============================================================ */
     function switchTab(evt, tabId) {
         // Chiudi tutti i pannelli
         document.querySelectorAll('.panel').forEach(p => {
             p.classList.remove('active');
         });
+        
         // Rimuovi active da tutti i tab
         document.querySelectorAll('.tab-btn').forEach(b => {
             b.classList.remove('active');
         });
+        
         // Apri pannello + attiva tab
         document.getElementById(tabId).classList.add('active');
-        evt.currentTarget.classList.add('active');
+        const clickedTab = evt.currentTarget;
+        clickedTab.classList.add('active');
+        
+        // NOVITÀ: Fai scorrere la barra per centrare il bottone cliccato
+        clickedTab.scrollIntoView({ 
+            behavior: 'smooth', 
+            inline: 'center', 
+            block: 'nearest' 
+        });
         
         // Assicura che la grid sia visibile (reset detail)
         const grid = document.getElementById(tabId + '-grid');
