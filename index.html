@@ -210,7 +210,6 @@
             position: relative;
             z-index: 10;
             box-shadow: 0 8px 40px rgba(43,35,24,.05);
-            /* Aggiunto un margin bottom per non far finire la pagina attaccata al contenuto */
             margin-bottom: 60px; 
         }
 
@@ -224,7 +223,6 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* Animazione dal basso molto più evidente per i progetti */
         @keyframes detailSlideUp {
             from { opacity: 0; transform: translateY(60px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -472,7 +470,6 @@
             gap: 28px;
         }
 
-        /* Card varianti */
         .project-card {
             position: relative;
             background: var(--paper);
@@ -489,7 +486,6 @@
             box-shadow: var(--shadow-hover);
         }
 
-        /* Overlay al hover */
         .card-overlay {
             position: absolute;
             inset: 0;
@@ -521,7 +517,6 @@
             border-color: white;
         }
 
-        /* Immagine card */
         .card-img {
             width: 100%;
             height: 220px;
@@ -562,7 +557,6 @@
 
         .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
 
-        /* Card featured — occupa 2 colonne */
         .project-card.featured {
             grid-column: span 2;
         }
@@ -575,7 +569,6 @@
             font-size: 30px;
         }
 
-        /* Card tall — occupa 2 righe */
         .project-card.tall {
             grid-row: span 2;
         }
@@ -589,7 +582,6 @@
         ============================================================ */
         .detail-view {
             display: none;
-            /* Nuova animazione più decisa verso l'alto */
             animation: detailSlideUp .45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
         }
 
@@ -698,28 +690,64 @@
         .btn-primary:hover { background: var(--ink); transform: translateY(-2px); }
 
         /* ============================================================
-           RESPONSIVE
+           RESPONSIVE (AGGIORNATO)
         ============================================================ */
         @media (max-width: 900px) {
-            .about-layout { grid-template-columns: 1fr; }
-            .about-photo-col { max-width: 340px; }
-            .two-col { grid-template-columns: 1fr; }
+            /* Chi sono: centratura e spazi */
+            .about-layout { grid-template-columns: 1fr; gap: 36px; }
+            .about-photo-col { max-width: 100%; display: flex; justify-content: center; }
+            .about-photo { max-width: 380px; } /* Evita che la foto diventi gigantesca su tablet */
+            
+            .two-col { grid-template-columns: 1fr; gap: 40px; margin-top: 48px; padding-top: 40px; }
+            
+            /* Griglie progetti */
             .project-grid { grid-template-columns: repeat(2, 1fr); }
             .project-card.featured { grid-column: span 2; }
             .project-card.tall { grid-row: auto; }
-            .project-card.tall .card-img { height: 220px; }
             .detail-gallery { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 640px) {
-            body { padding: 20px 10px 0; }
-            .panel { padding: 32px 22px; }
-            .project-grid { grid-template-columns: 1fr; }
+            /* Spaziature generali più ottimizzate per il piccolo schermo */
+            body { padding: 16px 8px 0; }
+            .wrap { max-width: 100%; }
+            .panel { padding: 32px 16px; margin-bottom: 40px; }
+            
+            /* Header e contatti: 100% larghezza per i bottoni (migliore UX touch) */
+            .site-header { flex-direction: column; align-items: flex-start; padding: 0 8px 32px; gap: 16px; }
+            .header-name { font-size: clamp(42px, 12vw, 56px); }
+            .header-right { width: 100%; align-items: stretch; }
+            .contact-pill { justify-content: center; padding: 12px 18px; font-size: 14px; }
+            .contacts-row { flex-direction: column; width: 100%; }
+            .contacts-row .contact-pill { width: 100%; justify-content: center; }
+
+            /* ============================================================
+               IMMAGINI RESPONSIVE E PERFETTE DA MOBILE
+            ============================================================ */
+            .project-grid { grid-template-columns: 1fr; gap: 24px; }
             .project-card.featured { grid-column: span 1; }
-            .detail-gallery { grid-template-columns: 1fr; }
-            .header-right { align-items: flex-start; }
-            .site-header { flex-direction: column; align-items: flex-start; }
-            .detail-text { padding: 30px 24px; }
+            
+            /* Usa aspect-ratio invece di height fissa per non decapitare le grafiche */
+            .card-img, 
+            .project-card.featured .card-img, 
+            .project-card.tall .card-img { 
+                height: auto; 
+                aspect-ratio: 4/3; 
+            }
+            
+            .detail-gallery { grid-template-columns: 1fr; gap: 16px; }
+            .detail-gallery-img { 
+                height: auto; 
+                aspect-ratio: 4/3; 
+            }
+
+            /* Tipografia e box dettaglio adattati */
+            .detail-text { padding: 28px 20px; border-left-width: 3px; }
+            .detail-title { font-size: 32px; }
+            
+            .about-photo { max-width: 100%; }
+            .about-name-serif { font-size: 38px; }
+            .skills-box { padding: 24px 20px; }
         }
     </style>
 </head>
@@ -819,7 +847,7 @@
                         <div class="exp-body">
                             <div class="exp-meta brand">In Corso</div>
                             <div class="exp-title">Corso Social Media Manager</div>
-                            <div class="exp-date">Padova · 2025 — Presente</div>
+                            <div class="exp-date">Padova · Presente</div>
                             <p class="exp-desc">Analisi di mercato quantitativa e qualitativa, strategia dei contenuti, marketing legale, integrazione AI nel workflow di business.</p>
                         </div>
                     </div>
@@ -827,7 +855,7 @@
                     <div class="exp-card">
                         <div class="exp-bar brand"></div>
                         <div class="exp-body">
-                            <div class="exp-meta brand">Diploma · Voto —</div>
+                            <div class="exp-meta brand">Diploma · Voto 81/100</div>
                             <div class="exp-title">Liceo Artistico G. Valle</div>
                             <div class="exp-date">Padova · 2019 — 2025 · Indirizzo Grafica</div>
                             <p class="exp-desc">Cinque anni di studio intensivo del linguaggio visivo, composizione, progettazione grafica tradizionale e digitale. Base tecnica della Suite Adobe.</p>
@@ -852,7 +880,7 @@
                 <div class="exp-card">
                     <div class="exp-bar digital"></div>
                     <div class="exp-body">
-                        <div class="exp-meta digital">Freelance · Lavoro Autonomo</div>
+                        <div class="exp-meta digital">Lavoro Autonomo · Progetti Indipendenti</div>
                         <div class="exp-title">Grafica &amp; Digital Content</div>
                         <div class="exp-date">2021 — Presente</div>
                         <p class="exp-desc">Sviluppo di identità visive complete, piani editoriali social e materiali promozionali per piccole realtà aziendali. Suite Adobe + workflow AI generativa per asset visivi e contenuti scalabili.</p>
@@ -864,7 +892,7 @@
                     <div class="exp-body">
                         <div class="exp-meta print">Volontariato</div>
                         <div class="exp-title">Cicerona — FAI</div>
-                        <div class="exp-date">Fondo Ambiente Italiano · 2019 — 2020</div>
+                        <div class="exp-date">Fondo Ambiente Italiano · 2024</div>
                         <p class="exp-desc">Guida per visitatori in eventi culturali aperti al pubblico. Capacità di sintesi, comunicazione chiara di contenuti complessi e orientamento al pubblico eterogeneo.</p>
                     </div>
                 </div>
