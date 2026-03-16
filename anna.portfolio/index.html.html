@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anna Bettini — Design & Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+           VARIABILI
+        ============================================================ */
+        :root {
+            --bg:        #f2ede4;
+            --paper:     #fdfcf9;
+            --paper-2:   #f7f4ee;
+            --ink:       #2b2318;
+            --ink-muted: #6b5f52;
+            --ink-faint: #a8998a;
+
+            /* Colori sezione — ognuno ha logica narrativa */
+            --c-chi:     #3d2e22;   /* Espresso — identità, solidità */
+            --c-brand:   #a05c5c;   /* Bordeaux — creatività, logo, forma */
+            --c-print:   #4e6b52;   /* Salvia — natura, carta stampata */
+            --c-digital: #3a5f7a;   /* Acciaio — schermo, tecnologia */
+            --c-mkt:     #8a6830;   /* Oro — valore, strategy, business */
+
+            --serif: 'Cormorant Garant', Georgia, serif;
+            --sans:  'DM Sans', sans-serif;
+
+            --radius-card: 3px;
+            --shadow-card: 0 2px 16px rgba(43,35,24,.07);
+            --shadow-hover: 0 12px 40px rgba(43,35,24,.13);
+            --transition: .28s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* ============================================================
+           RESET & BASE
+        ============================================================ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(160,92,92,.06) 0%, transparent 50%),
+                radial-gradient(circle at 85% 80%, rgba(58,95,122,.06) 0%, transparent 50%),
+                linear-gradient(#ddd8cf 1px, transparent 1px),
+                linear-gradient(90deg, #ddd8cf 1px, transparent 1px);
+            background-size: auto, auto, 22px 22px, 22px 22px;
+            font-family: var(--sans);
+            color: var(--ink);
+            min-height: 100vh;
+            padding: 40px 16px 0;
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+           WRAPPER
+        ============================================================ */
+        .wrap { width: 100%; max-width: 1180px; margin: 0 auto; }
+
+        /* ============================================================
+           HEADER
+        ============================================================ */
+        .site-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 0 4px 48px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-left { max-width: 680px; }
+
+        .header-eyebrow {
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .header-name {
+            font-family: var(--serif);
+            font-size: clamp(52px, 8vw, 96px);
+            font-weight: 700;
+            color: var(--c-chi);
+            line-height: .95;
+            letter-spacing: -1px;
+        }
+
+        .header-name em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--c-brand);
+        }
+
+        .header-tagline {
+            margin-top: 18px;
+            font-size: 15px;
+            color: var(--ink-muted);
+            max-width: 460px;
+            line-height: 1.65;
+        }
+
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .contact-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border: 1.5px solid rgba(61,46,34,.18);
+            border-radius: 40px;
+            font-size: 13px;
+            color: var(--ink-muted);
+            text-decoration: none;
+            background: var(--paper);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .contact-pill:hover {
+            border-color: var(--c-chi);
+            color: var(--c-chi);
+            background: white;
+            transform: translateY(-1px);
+        }
+        .contact-pill .icon { font-size: 14px; }
+
+        /* ============================================================
+           TABS
+        ============================================================ */
+        .tabs-bar {
+            display: flex;
+            align-items: flex-end;
+            padding-left: 12px;
+            margin-bottom: -1px;
+            position: relative;
+            z-index: 20;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .tabs-bar::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            flex-shrink: 0;
+            padding: 14px 28px 15px;
+            margin-left: -10px;
+            border-radius: 6px 6px 0 0;
+            border: 1px solid rgba(0,0,0,.1);
+            border-bottom: none;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .3px;
+            cursor: pointer;
+            color: rgba(255,255,255,.9);
+            position: relative;
+            transition: var(--transition);
+            background: none;
+            white-space: nowrap;
+        }
+        .tab-btn:first-child { margin-left: 0; }
+
+        .tab-btn[data-tab="chi-sono"]  { background: var(--c-chi);     z-index: 5; }
+        .tab-btn[data-tab="brand"]     { background: var(--c-brand);    z-index: 4; }
+        .tab-btn[data-tab="print"]     { background: var(--c-print);    z-index: 3; }
+        .tab-btn[data-tab="digital"]   { background: var(--c-digital);  z-index: 2; }
+        .tab-btn[data-tab="marketing"] { background: var(--c-mkt);      z-index: 1; }
+
+        .tab-btn:not(.active):hover {
+            transform: translateY(-4px);
+            filter: brightness(1.08);
+        }
+
+        .tab-btn.active {
+            background: var(--paper) !important;
+            z-index: 25 !important;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--paper);
+            font-weight: 600;
+        }
+        .tab-btn.active[data-tab="chi-sono"]  { color: var(--c-chi); }
+        .tab-btn.active[data-tab="brand"]     { color: var(--c-brand); }
+        .tab-btn.active[data-tab="print"]     { color: var(--c-print); }
+        .tab-btn.active[data-tab="digital"]   { color: var(--c-digital); }
+        .tab-btn.active[data-tab="marketing"] { color: var(--c-mkt); }
+
+        /* ============================================================
+           PANNELLO PRINCIPALE
+        ============================================================ */
+        .panel {
+            display: none;
+            background: var(--paper);
+            border: 1px solid #e6dfd4;
+            border-radius: 0 6px 6px 6px;
+            padding: 56px 52px;
+            min-height: 640px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 8px 40px rgba(43,35,24,.05);
+            /* Aggiunto un margin bottom per non far finire la pagina attaccata al contenuto */
+            margin-bottom: 60px; 
+        }
+
+        .panel.active {
+            display: block;
+            animation: panelIn .35s ease-out both;
+        }
+
+        @keyframes panelIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animazione dal basso molto più evidente per i progetti */
+        @keyframes detailSlideUp {
+            from { opacity: 0; transform: translateY(60px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================================
+           SECTION TITLE
+        ============================================================ */
+        .section-title {
+            font-family: var(--serif);
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 600;
+            color: var(--c-chi);
+            text-align: center;
+            margin-bottom: 44px;
+        }
+
+        .section-title .accent {
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        /* ============================================================
+           LABEL / TAG
+        ============================================================ */
+        .label {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding-bottom: 4px;
+            border-bottom: 2px solid currentColor;
+            margin-bottom: 16px;
+        }
+        .label.chi    { color: var(--c-chi); }
+        .label.brand  { color: var(--c-brand); }
+        .label.print  { color: var(--c-print); }
+        .label.digital{ color: var(--c-digital); }
+        .label.mkt    { color: var(--c-mkt); }
+
+        .tag {
+            display: inline-block;
+            background: var(--paper-2);
+            border: 1px solid #e2d9cc;
+            color: var(--ink-muted);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 2px;
+        }
+
+        /* ============================================================
+           CHI SONO
+        ============================================================ */
+        .about-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 52px;
+            align-items: start;
+        }
+
+        .about-photo-col { position: relative; }
+
+        .about-photo {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            border-radius: var(--radius-card);
+            display: block;
+            background: var(--paper-2);
+            border: 1px solid #e6dfd4;
+        }
+
+        .about-text { padding-top: 4px; }
+
+        .about-name-serif {
+            font-family: var(--serif);
+            font-size: 46px;
+            font-weight: 600;
+            color: var(--c-chi);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .about-name-serif em { font-style: italic; font-weight: 400; color: var(--c-brand); }
+
+        .about-role {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            margin-bottom: 24px;
+        }
+
+        .about-bio {
+            font-size: 15px;
+            color: var(--ink-muted);
+            line-height: 1.8;
+            margin-bottom: 28px;
+            border-left: 3px solid var(--c-brand);
+            padding-left: 20px;
+        }
+
+        .about-highlight {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-style: italic;
+            color: var(--c-chi);
+            opacity: .7;
+            margin-bottom: 28px;
+        }
+
+        .contacts-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 36px;
+        }
+
+        /* ============================================================
+           SKILLS & ESPERIENZE
+        ============================================================ */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 52px;
+            margin-top: 60px;
+            padding-top: 52px;
+            border-top: 1px solid #e6dfd4;
+        }
+
+        .skills-box {
+            background: var(--paper-2);
+            padding: 36px;
+            border-radius: var(--radius-card);
+            border: 1px solid #e6dfd4;
+        }
+
+        .skills-box h3 {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--c-chi);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0d8c8;
+        }
+
+        .skills-box ul {
+            list-style: none;
+            margin-bottom: 28px;
+        }
+
+        .skills-box li {
+            position: relative;
+            padding-left: 18px;
+            font-size: 14px;
+            color: var(--ink-muted);
+            line-height: 1.75;
+        }
+
+        .skills-box li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--c-brand);
+            font-size: 12px;
+            top: 2px;
+        }
+
+        .col-title {
+            font-family: var(--serif);
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--c-chi);
+            margin-bottom: 24px;
+        }
+
+        .exp-card {
+            display: flex;
+            background: var(--paper);
+            border: 1px solid #ede5d8;
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+        }
+        .exp-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .exp-bar { width: 5px; flex-shrink: 0; }
+        .exp-bar.brand   { background: var(--c-brand); }
+        .exp-bar.digital { background: var(--c-digital); }
+        .exp-bar.print   { background: var(--c-print); }
+        .exp-bar.chi     { background: var(--c-chi); }
+        .exp-bar.mkt     { background: var(--c-mkt); }
+
+        .exp-body { padding: 22px 24px; }
+
+        .exp-meta {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .exp-meta.brand   { color: var(--c-brand); }
+        .exp-meta.digital { color: var(--c-digital); }
+        .exp-meta.print   { color: var(--c-print); }
+        .exp-meta.chi     { color: var(--c-chi); }
+        .exp-meta.mkt     { color: var(--c-mkt); }
+
+        .exp-title {
+            font-family: var(--serif);
+            font-size: 19px;
+            font-weight: 600;
+            color: var(--c-chi);
+            margin-bottom: 3px;
+        }
+
+        .exp-date {
+            font-size: 11px;
+            color: var(--ink-faint);
+            margin-bottom: 10px;
+        }
+
+        .exp-desc {
+            font-size: 13.5px;
+            color: var(--ink-muted);
+            line-height: 1.65;
+        }
+
+        /* ============================================================
+           PROJECT GRID 
+        ============================================================ */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        /* Card varianti */
+        .project-card {
+            position: relative;
+            background: var(--paper);
+            border: 1px solid #ede5d8;
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Overlay al hover */
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(43,35,24,.72);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .card-overlay { opacity: 1; }
+
+        .overlay-cta {
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1.5px solid rgba(255,255,255,.6);
+            padding: 10px 24px;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .overlay-cta {
+            background: white;
+            color: var(--c-chi);
+            border-color: white;
+        }
+
+        /* Immagine card */
+        .card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(135deg, var(--paper-2), #ede5d8);
+        }
+
+        .card-body { padding: 20px 22px 24px; }
+
+        .card-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .card-label.brand   { color: var(--c-brand); }
+        .card-label.print   { color: var(--c-print); }
+        .card-label.digital { color: var(--c-digital); }
+        .card-label.mkt     { color: var(--c-mkt); }
+
+        .card-title {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--c-chi);
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--ink-muted);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+        /* Card featured — occupa 2 colonne */
+        .project-card.featured {
+            grid-column: span 2;
+        }
+
+        .project-card.featured .card-img {
+            height: 280px;
+        }
+
+        .project-card.featured .card-title {
+            font-size: 30px;
+        }
+
+        /* Card tall — occupa 2 righe */
+        .project-card.tall {
+            grid-row: span 2;
+        }
+
+        .project-card.tall .card-img {
+            height: 360px;
+        }
+
+        /* ============================================================
+           DETAIL VIEW
+        ============================================================ */
+        .detail-view {
+            display: none;
+            /* Nuova animazione più decisa verso l'alto */
+            animation: detailSlideUp .45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: 1.5px solid #e0d6c8;
+            border-radius: 3px;
+            padding: 10px 20px;
+            font-family: var(--sans);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 36px;
+        }
+
+        .back-btn:hover {
+            border-color: var(--c-chi);
+            color: var(--c-chi);
+            transform: translateX(-3px);
+        }
+
+        .detail-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 44px;
+        }
+
+        .detail-gallery.two-up {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .detail-gallery-img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            border-radius: var(--radius-card);
+            border: 1px solid #e6dfd4;
+            background: linear-gradient(135deg, var(--paper-2), #e8ddd0);
+        }
+
+        .detail-text {
+            background: var(--paper-2);
+            border-left: 4px solid var(--c-chi);
+            border-radius: 0 var(--radius-card) var(--radius-card) 0;
+            padding: 48px 52px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .detail-text.brand-accent   { border-left-color: var(--c-brand); }
+        .detail-text.print-accent   { border-left-color: var(--c-print); }
+        .detail-text.digital-accent { border-left-color: var(--c-digital); }
+        .detail-text.mkt-accent     { border-left-color: var(--c-mkt); }
+
+        .detail-title {
+            font-family: var(--serif);
+            font-size: 40px;
+            font-weight: 600;
+            color: var(--c-chi);
+            margin-bottom: 8px;
+            line-height: 1.1;
+        }
+
+        .detail-result {
+            font-family: var(--serif);
+            font-size: 18px;
+            font-style: italic;
+            color: var(--c-brand);
+            margin-bottom: 24px;
+        }
+
+        .detail-body {
+            font-size: 15px;
+            color: var(--ink-muted);
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        .detail-body strong { color: var(--c-chi); font-weight: 600; }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            padding: 13px 30px;
+            background: var(--c-chi);
+            color: white;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover { background: var(--ink); transform: translateY(-2px); }
+
+        /* ============================================================
+           RESPONSIVE
+        ============================================================ */
+        @media (max-width: 900px) {
+            .about-layout { grid-template-columns: 1fr; }
+            .about-photo-col { max-width: 340px; }
+            .two-col { grid-template-columns: 1fr; }
+            .project-grid { grid-template-columns: repeat(2, 1fr); }
+            .project-card.featured { grid-column: span 2; }
+            .project-card.tall { grid-row: auto; }
+            .project-card.tall .card-img { height: 220px; }
+            .detail-gallery { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            body { padding: 20px 10px 0; }
+            .panel { padding: 32px 22px; }
+            .project-grid { grid-template-columns: 1fr; }
+            .project-card.featured { grid-column: span 1; }
+            .detail-gallery { grid-template-columns: 1fr; }
+            .header-right { align-items: flex-start; }
+            .site-header { flex-direction: column; align-items: flex-start; }
+            .detail-text { padding: 30px 24px; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+    <header class="site-header">
+        <div class="header-left">
+            <span class="header-eyebrow">Portfolio</span>
+            <h1 class="header-name">Anna<br><em>Bettini</em></h1>
+            <p class="header-tagline">
+                Graphic Designer &amp; Social Media Strategist. Trasformo brief in identità visive,
+                unendo rigore tipografico, pensiero strategico e flussi di lavoro AI-assisted.
+            </p>
+        </div>
+        <div class="header-right">
+            <a class="contact-pill" href="mailto:bettinianna006@gmail.com">
+                <span class="icon">✉</span> bettinianna006@gmail.com
+            </a>
+            <a class="contact-pill" href="tel:+393319333084">
+                <span class="icon">✆</span> +39 331 933 3084
+            </a>
+            <a class="contact-pill" href="#">
+                <span class="icon">📍</span> Padova, IT
+            </a>
+        </div>
+    </header>
+
+    <nav class="tabs-bar">
+        <button class="tab-btn active" data-tab="chi-sono"  onclick="switchTab(event,'chi-sono')">Chi Sono</button>
+        <button class="tab-btn"        data-tab="brand"     onclick="switchTab(event,'brand')">Brand &amp; Logo</button>
+        <button class="tab-btn"        data-tab="print"     onclick="switchTab(event,'print')">Print &amp; Editorial</button>
+        <button class="tab-btn"        data-tab="digital"   onclick="switchTab(event,'digital')">Web &amp; Digital</button>
+        <button class="tab-btn"        data-tab="marketing" onclick="switchTab(event,'marketing')">Marketing &amp; Strategy</button>
+    </nav>
+
+    <section id="chi-sono" class="panel active">
+
+        <div class="about-layout">
+            <div class="about-photo-col">
+                <img class="about-photo" src="profilo.png" alt="Anna Bettini">
+            </div>
+
+            <div class="about-text">
+                <div class="about-name-serif">Chi <em>sono</em></div>
+                <div class="about-role">Graphic Designer · Social Media Strategist</div>
+
+                <p class="about-bio">
+                    Designer con base a Padova, specializzata in identità visiva, comunicazione editoriale
+                    e strategia digitale. Il mio punto di differenza: integro i tool di
+                    <strong>Intelligenza Artificiale generativa</strong> come parte strutturale del workflow creativo —
+                    non come scorciatoia, ma come moltiplicatore di qualità e velocità.
+                    Il risultato finale resta rigorosamente controllato, raffinato e umano.
+                </p>
+
+                <p class="about-highlight">"Creatività non significa assenza di metodo.<br>Significa metodo al servizio di un'idea."</p>
+
+                <div class="contacts-row">
+                    <a class="contact-pill" href="mailto:bettinianna006@gmail.com">
+                        <span class="icon">✉</span> bettinianna006@gmail.com
+                    </a>
+                    <a class="contact-pill" href="tel:+393319333084">
+                        <span class="icon">✆</span> +39 331 933 3084
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-col">
+
+            <div>
+                <div class="skills-box">
+                    <h3>Hard Skills</h3>
+                    <ul>
+                        <li>Adobe Illustrator · InDesign · Photoshop</li>
+                        <li>AI Generativa: Prompting avanzato, flussi di post-produzione</li>
+                        <li>Brand Identity &amp; Logo Design</li>
+                        <li>Impaginazione editoriale stampa e digitale</li>
+                        <li>Social Media Strategy &amp; Content Planning</li>
+                        <li>Tipografia, gerarchia visiva, layout</li>
+                        <li>Pre-stampa: file esecutivi, profili colore, verifica tecnica</li>
+                    </ul>
+                    <h3>Soft Skills</h3>
+                    <ul style="margin-bottom:0">
+                        <li>Ascolto del brief e traduzione in soluzioni grafiche</li>
+                        <li>Gestione autonoma dei progetti e delle scadenze</li>
+                        <li>Cura maniacale del dettaglio tipografico</li>
+                        <li>Aggiornamento continuo su tool e trend di settore</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top:32px">
+                    <div class="col-title">Formazione</div>
+
+                    <div class="exp-card">
+                        <div class="exp-bar brand"></div>
+                        <div class="exp-body">
+                            <div class="exp-meta brand">In Corso</div>
+                            <div class="exp-title">Corso Social Media Manager</div>
+                            <div class="exp-date">Padova · 2025 — Presente</div>
+                            <p class="exp-desc">Analisi di mercato quantitativa e qualitativa, strategia dei contenuti, marketing legale, integrazione AI nel workflow di business.</p>
+                        </div>
+                    </div>
+
+                    <div class="exp-card">
+                        <div class="exp-bar brand"></div>
+                        <div class="exp-body">
+                            <div class="exp-meta brand">Diploma · Voto —</div>
+                            <div class="exp-title">Liceo Artistico G. Valle</div>
+                            <div class="exp-date">Padova · 2019 — 2025 · Indirizzo Grafica</div>
+                            <p class="exp-desc">Cinque anni di studio intensivo del linguaggio visivo, composizione, progettazione grafica tradizionale e digitale. Base tecnica della Suite Adobe.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="col-title">Esperienze</div>
+
+                <div class="exp-card">
+                    <div class="exp-bar chi"></div>
+                    <div class="exp-body">
+                        <div class="exp-meta chi">Pre-Stampa</div>
+                        <div class="exp-title">Olallà</div>
+                        <div class="exp-date">2025</div>
+                        <p class="exp-desc">Preparazione e controllo di file esecutivi per la stampa. Adattamento grafico, gestione profili colore (CMYK/Pantone), ottimizzazione tecnica per produzione in serie. Contatto diretto con le logiche industriali della stampa.</p>
+                    </div>
+                </div>
+
+                <div class="exp-card">
+                    <div class="exp-bar digital"></div>
+                    <div class="exp-body">
+                        <div class="exp-meta digital">Freelance · Lavoro Autonomo</div>
+                        <div class="exp-title">Grafica &amp; Digital Content</div>
+                        <div class="exp-date">2021 — Presente</div>
+                        <p class="exp-desc">Sviluppo di identità visive complete, piani editoriali social e materiali promozionali per piccole realtà aziendali. Suite Adobe + workflow AI generativa per asset visivi e contenuti scalabili.</p>
+                    </div>
+                </div>
+
+                <div class="exp-card">
+                    <div class="exp-bar print"></div>
+                    <div class="exp-body">
+                        <div class="exp-meta print">Volontariato</div>
+                        <div class="exp-title">Cicerona — FAI</div>
+                        <div class="exp-date">Fondo Ambiente Italiano · 2019 — 2020</div>
+                        <p class="exp-desc">Guida per visitatori in eventi culturali aperti al pubblico. Capacità di sintesi, comunicazione chiara di contenuti complessi e orientamento al pubblico eterogeneo.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="brand" class="panel">
+
+        <div id="brand-grid">
+            <h2 class="section-title">Brand &amp; <span class="accent">Logo</span> Design</h2>
+            <div class="project-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 760px; margin: 0 auto;">
+
+                <div class="project-card" onclick="openDetail('brand-grid','brand-blueangels')">
+                    <img class="card-img" src="Copertina-Blue-Angels.png" alt="Blue Angels ASD">
+                    <div class="card-overlay"><span class="overlay-cta">Apri Progetto →</span></div>
+                    <div class="card-body">
+                        <div class="card-label brand">Brand Identity · Concorso Vinto</div>
+                        <div class="card-title">Blue Angels ASD</div>
+                        <p class="card-desc">Logo ufficiale per ASD di bocce per persone con disabilità. Segno grafico che fonde carrozzina e boccia in un simbolo unico.</p>
+                        <div class="tag-row"><span class="tag">Illustrator</span><span class="tag">Photoshop</span><span class="tag">Brand Identity</span></div>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="openDetail('brand-grid','brand-sperimentando')">
+                    <img class="card-img" src="Copertina-Sperimentando.png" alt="Sperimentando 2025">
+                    <div class="card-overlay"><span class="overlay-cta">Apri Progetto →</span></div>
+                    <div class="card-body">
+                        <div class="card-label brand">Logo · 1° su 257 progetti</div>
+                        <div class="card-title">Sperimentando 2025</div>
+                        <p class="card-desc">Logo vincitore assoluto per la mostra scientifica di Padova sul tema dell'acqua.</p>
+                        <div class="tag-row"><span class="tag">Illustrator</span><span class="tag">Concept Design</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="brand-blueangels" class="detail-view">
+            <button class="back-btn" onclick="closeDetail('brand-grid','brand-blueangels')">← Torna ai progetti</button>
+            <div class="detail-gallery two-up">
+                <img class="detail-gallery-img" src="Blue Angels-Interna-1.png" alt="Blue Angels Detail 1">
+                <img class="detail-gallery-img" src="Blue Angels-Interna-2.png" alt="Blue Angels Detail 2">
+            </div>
+            <div class="detail-text brand-accent">
+                <span class="label brand">Brand Identity · Concorso</span>
+                <h2 class="detail-title">Blue Angels ASD</h2>
+                <p class="detail-result">Progetto: logo ufficiale per associazione sportiva. Risultato: bando vinto.</p>
+                <p class="detail-body"><strong>Il problema:</strong> creare un'identità visiva che comunichi sport, inclusività e dinamismo, scalabile su supporti fisici (divise, striscioni, materiali promozionali) in una palette bianco-blu-giallo.</p>
+                <p class="detail-body"><strong>La soluzione:</strong> dopo una fase di ricerca visiva e moodboard, ho sviluppato un segno grafico originale: un atleta stilizzato con ali — richiamo esplicito al nome — dove le ruote della carrozzina coincidono visivamente con le bocce. Due simboli fondativi dell'associazione fusi in un unico gesto grafico, dinamico e immediatamente leggibile.</p>
+                <p class="detail-body"><strong>Il risultato:</strong> logo selezionato dalla commissione, attualmente in uso ufficiale.</p>
+            </div>
+        </div>
+
+        <div id="brand-sperimentando" class="detail-view">
+            <button class="back-btn" onclick="closeDetail('brand-grid','brand-sperimentando')">← Torna ai progetti</button>
+            <div class="detail-gallery two-up">
+                <img class="detail-gallery-img" src="Sperimentando-Interna-1.png" alt="Sperimentando Detail 1">
+                <img class="detail-gallery-img" src="Sperimentando-Interna-2.png" alt="Sperimentando Detail 2">
+            </div>
+            <div class="detail-text brand-accent">
+                <span class="label brand">Concept Design · Concorso</span>
+                <h2 class="detail-title">Sperimentando 2025</h2>
+                <p class="detail-result">1° classificato su 257 progetti da istituti di tutta Padova.</p>
+                <p class="detail-body"><strong>Il contesto:</strong> Sperimentando è la principale mostra scientifica di Padova. Per l'edizione 2025, tema "acqua", il bando era aperto a tutte le scuole della città.</p>
+                <p class="detail-body"><strong>Il concept:</strong> ho associato la fluidità dell'acqua al gesto del lavoro a maglia — due processi che condividono pazienza, ritmo e intrecci invisibili. Il segno grafico risultante è poetico e scientifico insieme: una texture liquida che si tesse come un filo, evocando rigore metodico e bellezza naturale.</p>
+                <p class="detail-body"><strong>Il risultato:</strong> logo selezionato su 257 presentati, adottato come immagine ufficiale dell'evento.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="print" class="panel">
+
+        <div id="print-grid">
+            <h2 class="section-title">Print &amp; <span class="accent">Editorial</span></h2>
+            <div class="project-grid">
+
+                <div class="project-card" onclick="openDetail('print-grid','print-burger')">
+                    <img class="card-img" src="Copertina-Fuori-Menù-Hamburger.png" alt="Fuori Menù Hamburger">
+                    <div class="card-overlay"><span class="overlay-cta">Apri Progetto →</span></div>
+                    <div class="card-body">
+                        <div class="card-label print">Menu Design · Typographic Layout</div>
+                        <div class="card-title">Fuori Menù Hamburger</div>
+                        <p class="card-desc">Architettura dell'informazione e gerarchia visiva per una linea di hamburger gourmet a tema (i Simpson). Layout pulito, lettura immediata, contemporaneo.</p>
+                        <div class="tag-row"><span class="tag">InDesign</span><span class="tag">Illustrator</span><span class="tag">Typography</span></div>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="openDetail('print-grid','print-poli')">
+                    <img class="card-img" src="Copertina-Poli.png" alt="Poli Distillerie">
+                    <div class="card-overlay"><span class="overlay-cta">Apri Progetto →</span></div>
+                    <div class="card-body">
+                        <div class="card-label print">Brochure A3</div>
+                        <div class="card-title">Poli Distillerie</div>
+                        <p class="card-desc">Brochure A3 con store illustrato che espone l'intera gamma di distillati per categoria.</p>
+                        <div class="tag-row"><span class="tag">InDesign</span><span class="tag">Photoshop</span></div>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="openDetail('print-grid','print-manolo')">
+                    <img class="card-img" src="Copertina-Manolo.png" alt="Manolo Panineria">
+                    <div class="card-overlay"><span class="overlay-cta">Apri Progetto →</span></div>
+                    <div class="card-body">
+                        <div class="card-label print">Commercial Print · In Uso</div>
+                        <div class="card-title">Manolo Panineria</div>
+                        <p class="card-desc">Listino commerciale attualmente in uso. Ascolto del brief, impaginazione funzionale, gerarchia chiara.</p>
+                        <div class="tag-row"><span class="tag">InDesign</span><span class="tag">Pre-stampa</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="print-burger" class="detail-view">
+            <button class="back-btn" onclick="closeDetail('print-grid','print-burger')">← Torna ai progetti</button>
+            <div class="detail-gallery two-up">
+                <img class="detail-gallery-img" src="Fuori-Menù-Hamburger-Interna-1.png" alt="Fuori Menù Hamburger Detail 1">
+                <img class="detail-gallery-img" src="Fuori-Menù-Hamburger-Interna-2.png" alt="Fuori Menù Hamburger Detail 2">
+            </div>
+            <div class="detail-text print-accent">
+                <span class="label print">Menu Design</span>
+                <h2 class="detail-title">Fuori Menù Hamburger</h2>
+                <p class="detail-result">Progetto: layout tipografico per un menù tematico hamburger gourmet.</p>
+                <p class="detail-body"><strong>Il problema:</strong> organizzare un menù con prodotti creativi (linea ispirata ai Simpsons: Lisa, Homer, Bart...) in modo che il nome del prodotto e il prezzo siano immediatamente leggibili al tavolo, con descrizioni ingredienti dettagliate che non appesantiscano la gerarchia visiva.</p>
+                <p class="detail-body"><strong>La soluzione:</strong> architettura tipografica a tre livelli gerarchici — naming del prodotto (display), prezzo (accent), ingredienti (body). Layout moderno, palette coerente col concept, lettura rapida garantita anche in condizioni di scarsa illuminazione.</p>
+            </div>
+        </div>
+
+        <div id="print-poli" class="detail-view">
+            <button class="back-btn" onclick="closeDetail('print-grid','print-poli')">← Torna ai progetti</button>
+            <div class="detail-gallery two-up">
+                <img class="detail-gallery-img" src="Poli-Interna-1.png" alt="Poli Distillerie Detail 1">
+                <img class="detail-gallery-img" src="Poli-Interna-2.png" alt="Poli Distillerie Detail 2">
+            </div>
+            <div class="detail-text print-accent">
+                <span class="label print">Brochure Design</span>
+                <h2 class="detail-title">Poli Distillerie</h2>
+                <p class="detail-result">Progetto accademico. Formato: brochure A3 bifacciale.</p>
+                <p class="detail-body">Realizzazione di una brochure per la storica azienda veneta Poli Distillerie. Il formato A3 aperto è stato sfruttato per una visuale illustrata che simula uno store fisico — scaffalature con l'intera gamma di distillati, suddivisi per categoria merceologica.</p>
+                <p class="detail-body">L'obiettivo era dimostrare la capacità di gestire un layout editoriale complesso su grande formato, con equilibrio tra immagine illustrata, testo informativo e brand heritage dell'azienda.</p>
+            </div>
+        </div>
+
+        <div id="print-manolo" class="detail-view">
+            <button class="back-btn" onclick="closeDetail('print-grid','print-manolo')">← Torna ai progetti</button>
+            <div class="detail-gallery two-up">
+                <img class="detail-gallery-img" src="Manolo-Interna-1.png" alt="Manolo Panineria Detail 1">
+                <img class="detail-gallery-img" src="Manolo-Interna-2.png" alt="Manolo Panineria Detail 2">
+            </div>
+            <div class="detail-text print-accent">
+                <span class="label print">Commercial Print · Committenza Reale</span>
+                <h2 class="detail-title">Manolo Panineria</h2>
+                <p class="detail-result">Listino attualmente in uso nella sede. Progetto su committenza diretta.</p>
+                <p class="detail-body"><strong>Il valore di questo progetto:</strong> è una consegna reale, non accademica. Ho tradotto le esigenze operative del cliente in un prodotto grafico funzionale — leggibile, stampabile, aggiornabile — costruendo un template riutilizzabile in Adobe InDesign.</p>
+                <p class="detail-body">Il processo ha incluso ascolto del brief, revisione iterativa con il cliente e ottimizzazione del file per la stampa in tipografia. Un caso concreto di gestione completa del workflow grafico dalla brief alla consegna.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="digital" class="panel">
+
+        <div id="digital-grid">
+            <h2 class="section-title">Web, Social &amp; <span class="accent">AI Content</span></h2>
+            <div class="project-grid">
+
+                <div class="project-card featured" onclick="openDetail('digital-grid','digital-sanmarco')">
+                    <img class="card-img" src="Copertina-Quiz-San-Marco.png" alt="Quiz Pizzeria San Marco">
+                    <div class="card-overlay"><span class="overlay-cta">Apri Progetto →</span></div>
+                    <div class="card-body">
+                        <div class="card-label digital">★ Progetto di Punta · Web App · AI Coding</div>
+                        <div class="card-title">Quiz: Che Pizza Sei?</div>
+                        <p class="card-desc">Web app gamificata in stile arcade anni '80 per Pizzeria San Marco. Idea, UX, design e sviluppo interamente guidati tramite Prompt Engineering avanzato. Risolvere il "panico da menu" con l'interazione.</p>
+                        <div class="tag-row"><span class="tag">AI Prompting</span><span class="tag">UI/UX Design</span><span class="tag">Gamification</span><span class="tag">Web App</span></div>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="openDetail('digital-grid','digital-ginkgo')">
+                    <img class="card-img" src="Copertina-Ginkgo.png" alt="Centro Ginkgo">
+                    <div class="card-overlay"><span class="overlay-cta">Apri Progetto →</span></div>
+                    <div class="card-body">
+                        <div class="card-label digital">AI Workflow · Print + Social</div>
+                        <div class="card-title">Centro Ginkgo</div>
+                        <p class="card-desc">Materiale promozionale (flyer A5 + formati social) con workflow AI generativa + post-produzione Photoshop.</p>
+                        <div class="tag-row"><span class="tag">AI Tool</span><span class="tag">Photoshop</span><span class="tag">Illustrator</span></div>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="openDetail('digital-grid','digital-food')">
+                    <img class="card-img" src="Copertina-Food-Styling.png" alt="Food Styling">
+                    <div class="card-overlay"><span class="overlay-cta">Apri Progetto →</span></div>
+                    <div class="card-body">
+                        <div class="card-label digital">Photography · Social Content</div>
+                        <div class="card-title">Food Styling &amp; Content</div>
+                        <p class="card-desc">Direzione artistica e food styling assistito dall'AI per valorizzazione di prodotto sui social.</p>
+                        <div class="tag-row"><span class="tag">Photography</span><span class="tag">AI Gen</span><span class="tag">Social</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="digital-sanmarco" class="detail-view">
+            <button class="back-btn" onclick="closeDetail('digital-grid','digital-sanmarco')">← Torna ai progetti</button>
+            <div class="detail-gallery">
+                <img class="detail-gallery-img" src="San Marco-Interna-1.png" alt="San Marco Quiz 1">
+                <img class="detail-gallery-img" src="San Marco-Interna-2.png" alt="San Marco Quiz 2">
+                <img class="detail-gallery-img" src="San Marco-Interna-3.png" alt="San Marco Quiz 3">
+            </div>
+            <div class="detail-text digital-accent">
+                <span class="label digital">Web App · AI-Driven Development</span>
+                <h2 class="detail-title">Pizzeria Arcade: "Che Pizza Sei?"</h2>
+                <p class="detail-result">Web app live e funzionante. Sviluppata interamente tramite Prompt Engineering avanzato.</p>
+                <p class="detail-body"><strong>Il problema strategico:</strong> i clienti di Pizzeria San Marco soffrono di "panico da menu" — troppa scelta, poca decisione, bassa soddisfazione percepita. L'obiettivo era trovare un meccanismo che guidasse la scelta in modo divertente e memorabile.</p>
+                <p class="detail-body"><strong>La soluzione:</strong> un'esperienza web interattiva in stile sala giochi anni '80. Un quiz a domande associa la personalità del cliente a una pizza specifica del menu — trasformando una decisione banale in un momento di intrattenimento brandizzato.</p>
+                <p class="detail-body"><strong>Il metodo:</strong> ho ricoperto il ruolo di designer e product manager. Attraverso sessioni di Prompt Engineering avanzato ho diretto l'IA nella scrittura del codice, nella costruzione del design pixel-art e nell'architettura della UX. Zero competenze di sviluppo tradizionale richieste — competenza strategica e di prompting totale.</p>
+                <a href="https://pizzasanmarco.netlify.app/" target="_blank" class="btn-primary">
+                    Prova la Web App in Diretta ↗
+                </a>
+            </div>
+        </div>
+
+        <div id="digital-ginkgo" class="detail-view">
+            <button class="back-btn" onclick="closeDetail('digital-grid','digital-ginkgo')">← Torna ai progetti</button>
+            <div class="detail-gallery two-up">
+                <img class="detail-gallery-img" src="Ginkgo-Interna-1.png" alt="Centro Ginkgo Flyer A5">
+                <img class="detail-gallery-img" src="Ginkgo-Interna-2.png" alt="Centro Ginkgo Social">
+            </div>
+            <div class="detail-text digital-accent">
+                <span class="label digital">Generative AI Workflow</span>
+                <h2 class="detail-title">Centro Ginkgo</h2>
+                <p class="detail-result">Materiali per campagna promozionale: flyer A5 cartaceo + formati digitali per social.</p>
+                <p class="detail-body"><strong>Il workflow adottato:</strong> ho usato tool di AI generativa per produrre asset visivi specifici — elementi botanici Ginkgo e background ad acquerello texturizzato. Questi asset raw sono stati post-prodotti, compositati e raffinati tipograficamente in Photoshop e Illustrator, garantendo coerenza, professionalità e un tono visivo rilassante adatto al settore benessere.</p>
+                <p class="detail-body">Il valore di questo progetto è dimostrare la mia capacità di <strong>dirigere l'AI come un art director dirige un fotografo</strong> — con brief precisi, revisioni iterative e controllo totale del risultato finale.</p>
+            </div>
+        </div>
+
+        <div id="digital-food" class="detail-view">
+            <button class="back-btn" onclick="closeDetail('digital-grid','digital-food')">← Torna ai progetti</button>
+            <div class="detail-gallery two-up">
+                <img class="detail-gallery-img" src="Food-Styling-Interna-1.png" alt="Food Styling 1">
+                <img class="detail-gallery-img" src="Food-Styling-Interna-2.png" alt="Food Styling 2">
+            </div>
+            <div class="detail-text digital-accent">
+                <span class="label digital">Social Content · Photography & AI</span>
+                <h2 class="detail-title">Food Styling &amp; Content Creation</h2>
+                <p class="detail-result">Contenuti visivi ad alto impatto per piano editoriale Instagram + Facebook nel settore ristorazione.</p>
+                <p class="detail-body"><strong>Il progetto:</strong> Creazione di scatti "appetizing" per valorizzare la texture artigianale di un piatto di spaghetti con gamberi.</p>
+                <p class="detail-body"><strong>Workflow integrato:</strong> Le immagini finali presentate in questo progetto sono state generate e perfezionate utilizzando strumenti di <strong>Intelligenza Artificiale</strong>, partendo da uno scatto di base effettuato rapidamente "al volo" all'interno del ristorante. Questo approccio ha permesso di ottimizzare radicalmente i tempi e i costi di un set fotografico tradizionale, garantendo comunque illuminazione, food styling e composizione perfetti per l'engagement social.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="marketing" class="panel">
+
+        <div id="marketing-grid">
+            <h2 class="section-title">Marketing &amp; <span class="accent">Brand Strategy</span></h2>
+            <div class="project-grid" style="grid-template-columns: repeat(1, 1fr); max-width: 400px; margin: 0 auto;">
+
+                <div class="project-card tall" onclick="openDetail('marketing-grid','mkt-essenza')">
+                    <img class="card-img" src="Copertina-Essenza+.png" alt="Essenza+ Concept">
+                    <div class="card-overlay"><span class="overlay-cta">Apri Progetto →</span></div>
+                    <div class="card-body">
+                        <div class="card-label mkt">Business Design · Lancio Prodotto</div>
+                        <div class="card-title">Essenza+</div>
+                        <p class="card-desc">Analisi di mercato, posizionamento e copywriting per il lancio di un beverage funzionale alternativo al caffè. Dalla ricerca quantitativa alla scrittura degli script ADV.</p>
+                        <div class="tag-row"><span class="tag">Market Research</span><span class="tag">Brand Strategy</span><span class="tag">Copywriting</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="mkt-essenza" class="detail-view">
+            <button class="back-btn" onclick="closeDetail('marketing-grid','mkt-essenza')">← Torna ai progetti</button>
+            <div class="detail-gallery">
+                <img class="detail-gallery-img" src="Essenza+-Interna-1.png" alt="Essenza+ Analisi">
+                <img class="detail-gallery-img" src="Essenza+-Interna-2.png" alt="Essenza+ Positioning">
+                <img class="detail-gallery-img" src="Essenza+-Interna-3.png" alt="Essenza+ Script">
+            </div>
+            <div class="detail-text mkt-accent">
+                <span class="label mkt">Business Design · Lancio Prodotto</span>
+                <h2 class="detail-title">Essenza+: Più che un caffè</h2>
+                <p class="detail-result">Caso studio completo: dall'analisi di mercato al lancio di un brand beverage funzionale. Progetto nato in ambito Corso Social Media Manager.</p>
+
+                <p class="detail-body"><strong>Il problema di mercato:</strong> i consumatori che evitano il caffè (per ansia, insonnia, problemi digestivi) ripiegano sul decaffeinato — un prodotto "sottrattivo", privo di benefici aggiuntivi. Una nicchia sottovalutata con alta propensione alla spesa.</p>
+
+                <p class="detail-body"><strong>La risposta strategica — Essenza+:</strong> bevanda funzionale caffeine-free, addizionata con complesso vitaminico B (B12, B6, B1, B5) per garantire energia autentica, focus cognitivo e vitalità senza nessuno degli effetti collaterali del caffè tradizionale. Posizionamento: premium, scientifico, quotidiano.</p>
+
+                <p class="detail-body"><strong>Output prodotti:</strong> analisi di mercato quantitativa/qualitativa (penetrazione, barriere all'acquisto, profilo target), brand positioning statement, script per Reel con approccio provocatorio ("Bevi decaffeinato... ma perché?"), copy per format Carosello educativo per il target consapevole.</p>
+
+                <p class="detail-body">Questo caso studio dimostra la capacità di attraversare l'intero processo di product marketing — <strong>dalla ricerca all'identità, dall'identità alla comunicazione.</strong></p>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+    /* ============================================================
+       TAB SWITCHING
+    ============================================================ */
+    function switchTab(evt, tabId) {
+        // Chiudi tutti i pannelli
+        document.querySelectorAll('.panel').forEach(p => {
+            p.classList.remove('active');
+        });
+        // Rimuovi active da tutti i tab
+        document.querySelectorAll('.tab-btn').forEach(b => {
+            b.classList.remove('active');
+        });
+        // Apri pannello + attiva tab
+        document.getElementById(tabId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+        
+        // Assicura che la grid sia visibile (reset detail)
+        const grid = document.getElementById(tabId + '-grid');
+        if (grid) grid.style.display = '';
+        document.querySelectorAll('#' + tabId + ' .detail-view').forEach(d => {
+            d.style.display = 'none';
+        });
+    }
+
+    /* ============================================================
+       DETAIL VIEW
+    ============================================================ */
+    function openDetail(gridId, detailId) {
+        document.getElementById(gridId).style.display = 'none';
+        const detail = document.getElementById(detailId);
+        detail.style.display = 'block';
+    }
+
+    function closeDetail(gridId, detailId) {
+        document.getElementById(detailId).style.display = 'none';
+        document.getElementById(gridId).style.display = '';
+    }
+</script>
+</body>
+</html>
