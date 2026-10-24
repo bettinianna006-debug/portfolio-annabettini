@@ -7,7 +7,7 @@ const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
 const root=document.documentElement;
 const TR=window.__T||{};const T=s=>(TR[s]!==undefined?TR[s]:s);
 const LANG=(root.lang||'it').slice(0,2);
-const LOC={it:'it-IT',en:'en-GB',fr:'fr-FR',es:'es-ES',de:'de-DE'}[LANG]||'it-IT';
+const LOC={it:'it-IT',en:'en-US',fr:'fr-FR',es:'es-ES',de:'de-DE'}[LANG]||'it-IT';
 const [GS,DS]={it:['.',','],en:[',','.'],fr:['\u202f',','],es:['.',','],de:['.',',']}[LANG]||['.',','];
 const ICON={play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg>'};
 
@@ -17,7 +17,7 @@ if(clk){
   const t=()=>{
     const n=new Date(),o={timeZone:'Europe/Rome'};
     const d=n.toLocaleDateString(LOC,{...o,weekday:'short',day:'numeric',month:'short'}).replace(',','');
-    const h=n.toLocaleTimeString(LOC,{...o,hour:'2-digit',minute:'2-digit'});
+    const h=n.toLocaleTimeString(LOC,{...o,hour:LANG==='en'?'numeric':'2-digit',minute:'2-digit'});
     clk.innerHTML='<span class="cd">'+d+'</span> <span>'+h+'</span>';
   };
   t();setInterval(t,15e3);
