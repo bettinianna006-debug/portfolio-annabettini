@@ -427,3 +427,4 @@ section{padding:clamp(1.8rem,5vw,3.4rem) 0}
 #lang-pop .net{text-decoration:none;color:inherit}
 #lang-pop .net .ic{font:700 .62rem/1 var(--b);letter-spacing:.03em}
 #lang-pop .net.is-on .ic{color:#1c1c1e}
+.ig-note{margin-top:.9rem;font-weight:500;color:var(--ink)}.ig-note a{color:var(--ink);text-decoration:none;background:linear-gradient(transparent 12%,var(--hl) 12%,var(--hl) 92%,transparent 92%);padding:0 .12em;font-weight:700}.ig-note a:hover{background:var(--soft)}
